@@ -19,7 +19,8 @@
   "scripts": {
     "build": "microbundle",
     "dev": "microbundle watch",
-    "test": "mocha ./src/index.test.js"
+    "test": "mocha ./src/index.test.js",
+    "lint": "eslint src/*.js lazy-example.js"
   },
   "files": [
     "src/index.js",
