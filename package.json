@@ -17,10 +17,11 @@
   "module": "dist/markdown-it-images-figures.module.js",
   "unpkg": "dist/markdown-it-images-figures.umd.js",
   "scripts": {
-    "build": "microbundle",
+    "build": "microbundle --target node --compress --sourcemap false",
     "dev": "microbundle watch",
     "test": "mocha ./src/index.test.js",
-    "lint": "eslint src/*.js lazy-example.js"
+    "lint": "eslint src/*.js lazy-example.js",
+    "prepublish": "npm run lint && npm run test && npm run build"
   },
   "files": [
     "src/index.js",
