@@ -90,7 +90,7 @@ module.exports = function imageFiguresPlugin(md, options) {
         }
 
         if (figCaption) {
-          const [captionContent] = md.parseInline(figCaption);
+          const [captionContent] = md.parseInline(figCaption, state.env);
           token.children.push(
             new state.Token('figcaption_open', 'figcaption', 1)
           );
