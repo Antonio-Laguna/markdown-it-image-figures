@@ -27,14 +27,14 @@ Output:
 ## Install
 
 ```
-$ npm install --save markdown-it-implicit-figures
+$ npm install markdown-it-image-figures
 ```
 
 ## Usage
 
 ```js
 const md = require('markdown-it')();
-const implicitFigures = require('markdown-it-implicit-figures');
+const implicitFigures = require('markdown-it-image-figures');
 
 md.use(implicitFigures);
 
