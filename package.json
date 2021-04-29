@@ -66,6 +66,6 @@
     "mocha": "^8.3.2"
   },
   "dependencies": {
-    "is-svg": "^3.0.0"
+    "is-svg": "^4.2.2"
   }
 }
