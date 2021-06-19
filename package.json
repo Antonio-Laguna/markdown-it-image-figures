@@ -63,7 +63,8 @@
     "markdown-it": "*",
     "markdown-it-attrs": "*",
     "microbundle": "^0.13.3",
-    "mocha": "^9.0.1"
+    "mocha": "^9.0.1",
+    "normalize-url": ">=4.5.1"
   },
   "dependencies": {
     "is-svg": "^4.3.1"
