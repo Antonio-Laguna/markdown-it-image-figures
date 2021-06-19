@@ -1,6 +1,6 @@
 {
   "name": "markdown-it-image-figures",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "Render images occurring by itself in a paragraph as a figure with support for figcaptions.",
   "license": "MIT",
   "repository": "git+https://github.com/Antonio-Laguna/markdown-it-image-figures.git",
