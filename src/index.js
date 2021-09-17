@@ -121,27 +121,42 @@ module.exports = function imageFiguresPlugin(md, options) {
       }
 
       if (options.lazy) {
-        const lazyClass = typeof options.lazy === 'string' ? options.lazy : 'lazy';
-        const src = image.attrs.find(([k]) => k === 'src');
-        image.attrs.push(['data-src', src[1]]);
-        removeAttributeFromImage(image, 'src');
+        const hasLoading = image.attrs.some(([attribute]) => attribute === 'loading');
 
+        if (!hasLoading) {
+          image.attrs.push(['loading', 'lazy']);
+        }
+      }
+
+      if (options.async) {
+        const hasDecoding = image.attrs.some(([attribute]) => attribute === 'decoding');
+
+        if (!hasDecoding) {
+          image.attrs.push(['decoding', 'async']);
+        }
+      }
+
+      if (options.classes && typeof options.classes === 'string') {
         let hasClass = false;
 
         for (let j = 0, length = image.attrs.length; j < length && !hasClass; j++) {
           const attrPair = image.attrs[j];
 
           if (attrPair[0] === 'class') {
-            attrPair[1] = `${attrPair[1]} ${lazyClass}`;
+            attrPair[1] = `${attrPair[1]} ${options.classes}`;
             hasClass = true;
           }
         }
 
         if (!hasClass) {
-          image.attrs.push(['class', lazyClass]);
+          image.attrs.push(['class', options.classes]);
         }
+      }
 
-        image.attrs.push(['loading', 'lazy']);
+      if (options.removeSrc) {
+        const src = image.attrs.find(([k]) => k === 'src');
+        image.attrs.push(['data-src', src[1]]);
+        removeAttributeFromImage(image, 'src');
       }
     }
   }

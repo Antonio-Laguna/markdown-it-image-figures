@@ -73,21 +73,51 @@ console.log(res);
 
 - `copyAttrs`: Copy attributes matching (RegExp or string) `copyAttrs` to `figure` element.
 
-- `lazy`: Removes the source from the image and applies the `loading` attribute as `lazy`.
+- `lazy`: Applies the `loading` attribute as `lazy`.
+
+- `removeSrc`: Removes the source from the image and saves it on `data-src`.
 
 Code like `![alt](fig.png)` renders to:
 
 ````html
 <figure>
-    <img alt="alt" data-src="fig.png" class="lazy" loading="lazy">
+    <img alt="alt" src="fig.png" loading="lazy">
 </figure>
 ````
 
-Then you need to load something like [Lozad.js](https://github.com/ApoorvSaxena/lozad.js) and some script like [this](./lazy-example.js). It's possible to change the `lazy` class added to the `img` (for easy selector) by just passing the class to the option such as:
+You can override it for a single image with something like `![alt](fig.png){loading=eager}` which will generate the following markup:
+
+````html
+<figure>
+    <img alt="alt" src="fig.png" loading="eager">
+</figure>
+````
+
+- `classes`: Adds the classes to the list of classes the image might have.
+
+- `async`: Adds the attribute `decoding="async"` to all images. As with `lazy` you should be able to undo this for singular images `![alt](fig.png){decoding=auto}`
+
+## Web performance recommended settings
+
+Recommended settings for web performance is as follows
+
+```
+{
+  lazy: true,
+  async: true
+}
+```
+
+Which will add `loading="lazy"` and `decoding="async"` to all images. This can be changed per image as explained above so you can opt out for a image at the top if you'd like. This will work great for the majority of the browsers.
+
+However, if you need to broad your browser support and ensure that old browsers get lazy loaded images, you should probably use this setting:
 
 ```js
 md.use(implicitFigures, {
-  lazy: 'some-other-class'
+  lazy: true,
+  removeSrc: true,
+  async: true,
+  classes: 'lazy'
 });
 
 const src = '![alt](fig.png)';
@@ -96,7 +126,9 @@ const res = md.render(src);
 console.log(res);
 /*
 <figure>
-    <img alt="alt" data-src="fig.png" class="some-other-class" loading="lazy">
+    <img alt="alt" data-src="fig.png" class="lazy" loading="lazy" decoding="async">
 </figure>
 */
 ```
+
+Then you need to load something like [Lozad.js](https://github.com/ApoorvSaxena/lozad.js) and some script like [this](./lazy-example.js). You might want to customise the class on the attribute `classes` which get added to the `img` (for easy selector).

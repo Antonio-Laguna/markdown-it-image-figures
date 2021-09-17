@@ -142,23 +142,55 @@ describe('markdown-it-image-figures', function() {
   it('should support lazy loading', function() {
     md = mdIT().use(attrs).use(implicitFigures, { lazy: true });
     const src = '![alt](fig.png)';
-    const expected = '<figure><img alt="alt" data-src="fig.png" class="lazy" loading="lazy"></figure>\n';
+    const expected = '<figure><img src="fig.png" alt="alt" loading="lazy"></figure>\n';
     const res = md.render(src);
     assert.strictEqual(res, expected);
   });
 
-  it('should support changing the lazy class', function() {
-    md = mdIT().use(attrs).use(implicitFigures, { lazy: 'foo' });
+  it('should be possible to override lazy', function() {
+    md = mdIT().use(attrs).use(implicitFigures, { lazy: true });
+    const src = '![alt](fig.png){loading=eager}';
+    const expected = '<figure><img src="fig.png" alt="alt" loading="eager"></figure>\n';
+    const res = md.render(src);
+    assert.strictEqual(res, expected);
+  });
+
+  it('should support async decoding', function() {
+    md = mdIT().use(attrs).use(implicitFigures, { async: true });
     const src = '![alt](fig.png)';
-    const expected = '<figure><img alt="alt" data-src="fig.png" class="foo" loading="lazy"></figure>\n';
+    const expected = '<figure><img src="fig.png" alt="alt" decoding="async"></figure>\n';
     const res = md.render(src);
     assert.strictEqual(res, expected);
   });
 
-  it('should support copying with lazy loading', function() {
-    md = mdIT().use(attrs).use(implicitFigures, { copyAttrs: '^class$', lazy: true });
+  it('should be possible to override decoding', function() {
+    md = mdIT().use(attrs).use(implicitFigures, { async: true });
+    const src = '![alt](fig.png){decoding=sync}';
+    const expected = '<figure><img src="fig.png" alt="alt" decoding="sync"></figure>\n';
+    const res = md.render(src);
+    assert.strictEqual(res, expected);
+  });
+
+  it('should support removing source', function() {
+    md = mdIT().use(attrs).use(implicitFigures, { removeSrc: true });
+    const src = '![alt](fig.png)';
+    const expected = '<figure><img alt="alt" data-src="fig.png"></figure>\n';
+    const res = md.render(src);
+    assert.strictEqual(res, expected);
+  });
+
+  it('should support adding classes', function() {
+    md = mdIT().use(attrs).use(implicitFigures, { classes: 'one two' });
+    const src = '![alt](fig.png)';
+    const expected = '<figure><img src="fig.png" alt="alt" class="one two"></figure>\n';
+    const res = md.render(src);
+    assert.strictEqual(res, expected);
+  });
+
+  it('should support copying classes', function() {
+    md = mdIT().use(attrs).use(implicitFigures, { copyAttrs: '^class$', classes: 'one two' });
     const src = '![alt](fig.png){.cls attr=val}';
-    const expected = '<figure class="cls"><img alt="alt" class="cls lazy" attr="val" data-src="fig.png" loading="lazy"></figure>\n';
+    const expected = '<figure class="cls"><img src="fig.png" alt="alt" class="cls one two" attr="val"></figure>\n';
     const res = md.render(src);
     assert.strictEqual(res, expected);
   });
