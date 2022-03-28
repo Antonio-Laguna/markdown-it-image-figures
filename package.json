@@ -6,7 +6,7 @@
   "repository": "git+https://github.com/Antonio-Laguna/markdown-it-image-figures.git",
   "author": {
     "name": "Antonio Laguna",
-    "email": "anlagmat@gmail.com",
+    "email": "antonio@laguna.es",
     "url": "https://antonio.laguna.es"
   },
   "engines": {
@@ -16,16 +16,27 @@
   "main": "dist/markdown-it-images-figures.js",
   "module": "dist/markdown-it-images-figures.module.js",
   "unpkg": "dist/markdown-it-images-figures.umd.js",
+  "exports": {
+    ".": {
+      "import": "./dist/markdown-it-images-figures.mjs",
+      "require": "./dist/markdown-it-images-figures.js",
+      "default": "./dist/markdown-it-images-figures.module.js"
+    }
+  },
   "scripts": {
     "build": "microbundle --target node --compress --sourcemap false",
+    "clean": "node -e \"fs.rmSync('./dist', { recursive: true, force: true });\"",
+    "prebuild": "npm run clean",
     "dev": "microbundle watch",
     "test": "mocha ./src/index.test.js",
     "lint": "eslint src/*.js lazy-example.js",
-    "prepublish": "npm run lint && npm run test && npm run build"
+    "prepublishOnly": "npm run lint && npm run test && npm run build"
   },
   "files": [
     "src/index.js",
-    "demo.js"
+    "LICENSE",
+    "README.md",
+    "dist"
   ],
   "homepage": "https://github.com/Antonio-Laguna/markdown-it-image-figures",
   "keywords": [
@@ -56,17 +67,13 @@
   },
   "devDependencies": {
     "babel-eslint": "^10.1.0",
-    "eslint": "^7.32.0",
+    "eslint": "^8.12.0",
     "eslint-config-firstandthird": "^6.0.3",
-    "eslint-plugin-import": "^2.24.2",
-    "eslint-plugin-mocha": "^9.0.0",
+    "eslint-plugin-import": "^2.25.4",
+    "eslint-plugin-mocha": "^10.0.3",
     "markdown-it": "*",
     "markdown-it-attrs": "*",
-    "microbundle": "^0.13.3",
-    "mocha": "^9.1.1",
-    "normalize-url": "^6.1.0"
-  },
-  "dependencies": {
-    "is-svg": "^4.3.1"
+    "microbundle": "^0.14.2",
+    "mocha": "^9.2.2"
   }
 }
