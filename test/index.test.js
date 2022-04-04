@@ -3,7 +3,7 @@
 import assert from 'assert';
 import attrs from 'markdown-it-attrs';
 import mdIT from 'markdown-it';
-import implicitFigures from 'markdown-it-image-figures';
+import implicitFigures from '../dist/markdown-it-images-figures.mjs';
 
 describe('markdown-it-image-figures', function() {
   let md;
