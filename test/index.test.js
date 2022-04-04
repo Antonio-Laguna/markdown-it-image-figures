@@ -1,9 +1,9 @@
 /* eslint-disable prefer-arrow-callback */
 'use strict';
-const assert = require('assert');
-const attrs = require('markdown-it-attrs');
-const mdIT = require('markdown-it');
-const implicitFigures = require('./index');
+import assert from 'assert';
+import attrs from 'markdown-it-attrs';
+import mdIT from 'markdown-it';
+import implicitFigures from 'markdown-it-image-figures';
 
 describe('markdown-it-image-figures', function() {
   let md;

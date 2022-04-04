@@ -12,7 +12,7 @@ function removeAttributeFromImage(image, attribute) {
   }
 }
 
-module.exports = function imageFiguresPlugin(md, options) {
+export default function imageFiguresPlugin(md, options) {
   options = options || {};
 
   function imageFigures(state) {
@@ -162,4 +162,4 @@ module.exports = function imageFiguresPlugin(md, options) {
   }
 
   md.core.ruler.before('linkify', 'image_figures', imageFigures);
-};
+}
