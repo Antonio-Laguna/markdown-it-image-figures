@@ -58,12 +58,12 @@ console.log(res);
   e.g.: `<figure data-type="image">`. This can be useful for applying a special
   styling for different kind of figures.
 
-- `figcaption`: Set `figcaption` to `true` to use the title as a `<figcaption>` block after the image. E.g.: `![This is an alt](fig.png "This is a caption")` renders to
+- `figcaption`: Set `figcaption` to `true` or `"title"` to use the title as a `<figcaption>` block after the image; set `figcaption` to `"alt"` to use the alt text as a `<figcaption>`. E.g.: `![This is an alt](fig.png "This is a title")` renders to
 
 ```html
 <figure>
     <img src="fig.png" alt="This is an alt">
-    <figcaption>This is a caption</figcaption>
+    <figcaption>This is a title</figcaption>
 </figure>
 ```
 
