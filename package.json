@@ -28,6 +28,7 @@
     "prebuild": "npm run clean",
     "dev": "microbundle watch",
     "test": "mocha ./src/index.test.js",
+    "test:exports": "node ./test/_import.mjs && node ./test/_require.cjs",
     "lint": "eslint src/*.js lazy-example.js",
     "prepublishOnly": "npm run lint && npm run test && npm run build"
   },
