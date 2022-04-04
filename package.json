@@ -25,12 +25,11 @@
   "scripts": {
     "build": "microbundle --target node --compress --sourcemap false",
     "clean": "node -e \"fs.rmSync('./dist', { recursive: true, force: true });\"",
-    "prebuild": "npm run clean",
     "dev": "microbundle watch",
     "test": "mocha ./test/index.test.js && npm run test:exports",
     "test:exports": "node ./test/_import.mjs && node ./test/_require.cjs",
     "lint": "eslint src/*.js lazy-example.js",
-    "prepublishOnly": "npm run lint && npm run test && npm run build"
+    "prepublishOnly": "npm run clean && npm run build && npm run lint && npm run test"
   },
   "files": [
     "src/index.js",
