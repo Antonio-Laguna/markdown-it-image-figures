@@ -13,16 +13,15 @@
     "node": ">=12.0.0"
   },
   "source": "src/index.js",
-  "main": "dist/markdown-it-images-figures.js",
-  "module": "dist/markdown-it-images-figures.module.js",
-  "unpkg": "dist/markdown-it-images-figures.umd.js",
+  "type": "module",
   "exports": {
-    ".": {
-      "import": "./dist/markdown-it-images-figures.mjs",
-      "require": "./dist/markdown-it-images-figures.js",
-      "default": "./dist/markdown-it-images-figures.module.js"
-    }
+    "import": "./dist/markdown-it-images-figures.mjs",
+    "require": "./dist/markdown-it-images-figures.cjs",
+    "default": "./dist/markdown-it-images-figures.module.js"
   },
+  "main": "./dist/markdown-it-images-figures.cjs",
+  "module": "./dist/markdown-it-images-figures.module.js",
+  "unpkg": "./dist/markdown-it-images-figures.umd.js",
   "scripts": {
     "build": "microbundle --target node --compress --sourcemap false",
     "clean": "node -e \"fs.rmSync('./dist', { recursive: true, force: true });\"",
