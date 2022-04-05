@@ -34,7 +34,7 @@ describe('markdown-it-image-figures', function() {
     assert.strictEqual(res, expected);
   });
 
-  it('should add convert alt text into a figcaption when opts.figcaption is set', function() {
+  it('should convert title text into a figcaption when opts.figcaption is true', function() {
     md = mdIT().use(implicitFigures, { figcaption: true });
     const src = '![This is an alt](fig.png "This is a caption")';
     const expected = '<figure><img src="fig.png" alt="This is an alt"><figcaption>This is a caption</figcaption></figure>\n';
@@ -42,13 +42,55 @@ describe('markdown-it-image-figures', function() {
     assert.strictEqual(res, expected);
   });
 
-  it('should convert alt text for each image into a figcaption when opts.figcaption is set', function() {
+  it('should convert title text for each image into a figcaption when opts.figcaption is true', function() {
     md = mdIT().use(implicitFigures, { figcaption: true });
     const src = '![alt 1](fig.png "caption 1")\n\n![alt 2](fig2.png "caption 2")';
     const expected = '<figure><img src="fig.png" alt="alt 1"><figcaption>caption 1</figcaption></figure>\n<figure><img src="fig2.png" alt="alt 2"><figcaption>caption 2</figcaption></figure>\n';
     const res = md.render(src);
     assert.strictEqual(res, expected);
   });
+
+  it('should convert title text into a figcaption when opts.figcaption is "title"', function() {
+    md = mdIT().use(implicitFigures, { figcaption: 'title' });
+    const src = '![This is an alt](fig.png "This is a caption")';
+    const expected = '<figure><img src="fig.png" alt="This is an alt"><figcaption>This is a caption</figcaption></figure>\n';
+    const res = md.render(src);
+    assert.strictEqual(res, expected);
+  });
+
+  it('should convert title text for each image into a figcaption when opts.figcaption is "title"', function() {
+    md = mdIT().use(implicitFigures, { figcaption: 'title' });
+    const src = '![alt 1](fig.png "caption 1")\n\n![alt 2](fig2.png "caption 2")';
+    const expected = '<figure><img src="fig.png" alt="alt 1"><figcaption>caption 1</figcaption></figure>\n<figure><img src="fig2.png" alt="alt 2"><figcaption>caption 2</figcaption></figure>\n';
+    const res = md.render(src);
+    assert.strictEqual(res, expected);
+  });
+
+  it('should convert alt text into a figcaption when opts.figcaption is set to "alt"', function() {
+    md = mdIT().use(implicitFigures, { figcaption: 'alt' });
+    const src = '![This is an alt](fig.png "This is a caption")';
+    const expected = '<figure><img src="fig.png" alt="This is an alt"><figcaption>This is an alt</figcaption></figure>\n';
+    const res = md.render(src);
+    assert.strictEqual(res, expected);
+  });
+
+  it('should convert alt text for each image into a figcaption when opts.figcaption is set to "alt"', function() {
+    md = mdIT().use(implicitFigures, { figcaption: 'alt' });
+    const src = '![alt 1](fig.png "caption 1")\n\n![alt 2](fig2.png "caption 2")';
+    const expected = '<figure><img src="fig.png" alt="alt 1"><figcaption>alt 1</figcaption></figure>\n<figure><img src="fig2.png" alt="alt 2"><figcaption>alt 2</figcaption></figure>\n';
+    const res = md.render(src);
+    assert.strictEqual(res, expected);
+  });
+
+  it('should throw an error when opts.figcaption is "ttitle"', function () {
+    md = mdIT().use(implicitFigures, { figcaption: 'ttitle' });
+    const src = '![alt 1](fig.png "caption 1")\n\n![alt 2](fig2.png "caption 2")';
+
+    assert.throws(() => {
+      md.render(src);
+    }, /figcaption must be one of: true,false,alt,title/);
+  });
+
 
   it('should add incremental tabindex to figures when opts.tabindex is set', function() {
     md = mdIT().use(implicitFigures, { tabindex: true });

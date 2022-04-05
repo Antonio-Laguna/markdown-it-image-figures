@@ -1,5 +1,7 @@
 'use strict';
 
+const validFigCaptionValues = new Set([true, false, 'alt', 'title']);
+
 function removeAttributeFromList(attrs, attribute) {
   const arr = Array.isArray(attrs) ? attrs : [];
 
@@ -10,6 +12,24 @@ function removeAttributeFromImage(image, attribute) {
   if (image && image.attrs) {
     image.attrs = removeAttributeFromList(image.attrs, attribute);
   }
+}
+
+function findCaptionText(captionType, image) {
+  if (!validFigCaptionValues.has(captionType)) {
+    throw new TypeError(`figcaption must be one of: ${[...validFigCaptionValues]}.`);
+  }
+
+  if (captionType === 'alt') {
+    return image.content;
+  }
+
+  const captionObj = image.attrs.find(([k]) => k === 'title');
+  if (Array.isArray(captionObj) && captionObj[1]) {
+    removeAttributeFromImage(image, 'title');
+    return captionObj[1];
+  }
+
+  return undefined;
 }
 
 export default function imageFiguresPlugin(md, options) {
@@ -82,12 +102,7 @@ export default function imageFiguresPlugin(md, options) {
       image = token.children.length === 1 ? token.children[0] : token.children[1];
 
       if (options.figcaption) {
-        let figCaption;
-        const captionObj = image.attrs.find(([k]) => k === 'title');
-
-        if (Array.isArray(captionObj)) {
-          figCaption = captionObj[1];
-        }
+        const figCaption = findCaptionText(options.figcaption, image);
 
         if (figCaption) {
           const [captionContent] = md.parseInline(figCaption, state.env);
