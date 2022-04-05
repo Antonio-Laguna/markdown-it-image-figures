@@ -1,6 +1,7 @@
 # Markdown IT Image Figures
 
 <span class="markdown-it-image-figures-npmversion"><a href="https://npmjs.org/package/markdown-it-image-figures" title="View this project on NPM"><img src="https://img.shields.io/npm/v/markdown-it-image-figures.svg" alt="NPM version" /></a></span>
+[![CI](https://github.com/Antonio-Laguna/markdown-it-image-figures/actions/workflows/ci.yml/badge.svg)](https://github.com/Antonio-Laguna/markdown-it-image-figures/actions/workflows/ci.yml)
 
 Render images occurring by itself in a paragraph as `<figure><img ...></figure>`, similar to [pandoc's implicit figures](http://pandoc.org/README.html#images).
 
