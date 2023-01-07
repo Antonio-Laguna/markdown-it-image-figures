@@ -236,4 +236,12 @@ describe('markdown-it-image-figures', function() {
     const res = md.render(src);
     assert.strictEqual(res, expected);
   });
+
+  it('should be possible to add width and height', function() {
+    md = mdIT().use(attrs).use(implicitFigures);
+    const src = '![alt](fig.png){width=100 height=200}';
+    const expected = '<figure><img src="fig.png" alt="alt" width="100" height="200"></figure>\n';
+    const res = md.render(src);
+    assert.strictEqual(res, expected);
+  });
 });
